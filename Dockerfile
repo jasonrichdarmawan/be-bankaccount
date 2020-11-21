@@ -15,4 +15,4 @@ ARG DEPEDENCY=/workspace/app/target/depedency
 COPY --from=build ${DEPEDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPEDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPEDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java", "-cp", "app:app/lib/*", "BeBankaccountApplication"]
+ENTRYPOINT ["java", "-cp", "app:app/lib/*", "com.personal.bebankaccount.BeBankaccountApplication"]
