@@ -2,6 +2,7 @@
 
 - Git
 - Docker Engine
+- Docker Compose
 
 ## Coding Styles
 
