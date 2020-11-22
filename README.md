@@ -1,3 +1,12 @@
+## To Do
+- [ ] GitHub self-hosted runners, to prevent unauthorized access to ssh port 22
+
+## CI/CD environment
+
+- Git
+- Docker Engine
+- Docker Compose
+
 ## Coding Styles
 
 To reduce boilerplate, follow this coding styles.
