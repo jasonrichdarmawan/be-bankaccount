@@ -15,7 +15,7 @@ services:
       - db-mysql
     image: be-bankaccount
     ports:
-    - 8080:8080
+    - 8443:8443
     restart: always
     env_file:
       - be-bankaccount.env
