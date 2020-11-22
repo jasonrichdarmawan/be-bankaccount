@@ -28,4 +28,4 @@ jobs:
         run: |
           eval $(ssh-agent -s)
           echo "${{ secrets.SSH_PRIVATE_KEY }}" |  ssh-add -
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.HOSTNAME }} "rm -rf be-bankaccount; git clone https://github.com/kidfrom/be-bankaccount.git; cd be-bankaccount; docker build -t be-bankaccount .; docker-compose up -d;"
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.HOSTNAME }} "rm -rf be-bankaccount; git clone https://github.com/kidfrom/be-bankaccount.git; cd be-bankaccount; echo ${{ secrets.be_bankaccount }} > be-bankaccount.env; docker build -t be-bankaccount .; docker-compose up -d;"
