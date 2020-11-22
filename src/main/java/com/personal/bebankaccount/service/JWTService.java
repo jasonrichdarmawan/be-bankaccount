@@ -1,5 +1,6 @@
 package com.personal.bebankaccount.service;
 
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -26,5 +27,16 @@ public class JWTService {
             .setExpiration(calendar.getTime())
             .signWith(key)
             .compact();
+  }
+
+  public boolean isValid(String token) {
+    SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+
+    try {
+      Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+      return true;
+    } catch (JwtException e) {
+      return false;
+    }
   }
 }
