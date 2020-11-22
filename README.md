@@ -1,9 +1,3 @@
-## CI/CD environment
-
-- Git
-- Docker Engine
-- Docker Compose
-
 ## Coding Styles
 
 To reduce boilerplate, follow this coding styles.
@@ -20,11 +14,6 @@ To reduce boilerplate, follow this coding styles.
   public model(String fullName) {
     this.fullName = fullName;
   }
-  ```
-- Use @JsonProperty("attribute")
-  ```
-  @JsonProperty("Full_Name")
-  String fullName;
   ```
 
 ### Model used by @Mapper
