@@ -8,4 +8,7 @@ import org.apache.ibatis.annotations.Select;
 public interface User_InfoMapper {
   @Select("SELECT Account_Number, Full_Name, ISO_4217 FROM user_info WHERE User_ID=#{userID}")
   User_InfoModel selectByUser_ID(String userID);
+
+  @Select("SELECT Full_Name FROM user_info WHERE Account_Number=#{accountNumber}")
+  String selectByAccount_Number(String accountNumber);
 }
