@@ -24,6 +24,11 @@ To reduce boilerplate, follow this coding styles.
     this.fullName = fullName;
   }
   ```
+- Use @JsonProperty("attribute")
+  ```
+  @JsonProperty("Full_Name")
+  String fullName;
+  ```
 
 ### Model used by @Mapper
 @Mapper can convert `ResultSet` to Object without setters and constructor:
