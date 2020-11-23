@@ -27,7 +27,7 @@ public class LoginService {
 
   public Map<String, Object> authenticate(LoginModel loginModel) {
     Map<String, Object> body = new HashMap<>();
-    String hashedPIN = user_loginMapper.getHashedPIN(loginModel.getUser_ID());
+    String hashedPIN = user_loginMapper.selectHashed_PIN(loginModel.getUserID());
 
     if (hashedPIN == null) {
       body.put("message_code", 302);
@@ -39,13 +39,13 @@ public class LoginService {
         body.put("message_code", 302);
         body.put("message", "Not Found");
       } else {
-        User_InfoModel user_infoModel = user_infoMapper.selectByUser_ID(loginModel.getUser_ID());
+        User_InfoModel user_infoModel = user_infoMapper.selectAccount_NumberFull_NameISO_4217(loginModel.getUserID());
 
         if (user_infoModel == null) {
           body.put("message_code", 500);
           body.put("message", "User_Info is not found. Contact Customer Support 1500888");
         } else {
-          String token = jwtService.generate(user_infoModel.getAccount_Number(), loginModel.getUser_ID());
+          String token = jwtService.generate(user_infoModel.getAccount_Number(), loginModel.getUserID());
 
           body.put("message_code", 200);
           body.put("message", "OK");

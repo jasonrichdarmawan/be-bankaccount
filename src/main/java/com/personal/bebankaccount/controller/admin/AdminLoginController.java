@@ -25,7 +25,7 @@ public class AdminLoginController {
 
   @PostMapping("api/v1/admin/login")
   public ResponseEntity<?> login(@Valid @RequestBody LoginModel loginModel) {
-    boolean userIDisAdmin = adminLoginMapper.selectByUser_ID(loginModel.getUser_ID());
+    boolean userIDisAdmin = adminLoginMapper.exists(loginModel.getUserID());
 
     if (!userIDisAdmin) {
       Map<String, Object> body = new HashMap<>();

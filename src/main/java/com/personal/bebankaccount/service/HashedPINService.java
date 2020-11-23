@@ -4,12 +4,22 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
 @Service
 public class HashedPINService {
+  public String hash(String pin) {
+    byte[] salt = getSalt();
+    int iterations = 65536;
+
+    byte[] generatedHashedPIN = generateSecretPBKDF2WithHmacSHA512(pin.toCharArray(), salt, iterations, 512);
+
+    return iterations + ":" + toHex(salt) + ":" + toHex(generatedHashedPIN);
+  }
   public boolean validate(String pin, String hashedPIN) {
     String[] parts = hashedPIN.split(":");
     int iterations = Integer.parseInt(parts[0]);
@@ -52,6 +62,18 @@ public class HashedPINService {
     } catch (InvalidKeySpecException e) {
       throw new IllegalStateException("Invalid KeySpec", e);
     }
+  }
+
+  private byte[] getSalt() {
+    SecureRandom secureRandom = new SecureRandom();
+    byte[] salt = new byte[16];
+    secureRandom.nextBytes(salt);
+    return salt;
+  }
+
+  private String toHex(byte[] bytes) {
+    BigInteger bigInteger = new BigInteger(1, bytes);
+    return bigInteger.toString(16);
   }
 
   private byte[] fromHex(String hex) {

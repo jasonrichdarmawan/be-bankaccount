@@ -3,6 +3,8 @@ package com.personal.bebankaccount.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @SuppressWarnings("unused")
@@ -10,17 +12,18 @@ import javax.validation.constraints.Size;
 public class LoginModel {
   @JsonProperty("User_ID")
   @Size(min = 12, max = 12, message = "User_ID length must be 12")
-  private String User_ID;
+  private String userID;
 
   @JsonProperty("PIN")
-  @Size(min = 6, max = 6, message = "PIN length must be 6")
-  private String PIN;
+  @NotNull(message = "PIN must not be null")
+  @Pattern(regexp = "[0-9]{6}", message = "PIN length must be 6")
+  private String pin;
 
-  public String getUser_ID() {
-    return User_ID;
+  public String getUserID() {
+    return userID;
   }
 
   public String getPIN() {
-    return PIN;
+    return pin;
   }
 }

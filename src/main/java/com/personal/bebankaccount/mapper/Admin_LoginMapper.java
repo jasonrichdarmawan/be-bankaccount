@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Select;
 public interface Admin_LoginMapper {
 
   @Select("SELECT EXISTS(SELECT 1 FROM admin_login WHERE User_ID=#{userID})")
-  boolean selectByUser_ID(String userID);
+  boolean exists(String userID);
 }

@@ -11,6 +11,12 @@ public class User_InfoModel {
   private String Full_Name;
   private Integer ISO_4217;
 
+  public User_InfoModel(String userID, String fullName, int iso4217) {
+    User_ID = userID;
+    Full_Name = fullName;
+    ISO_4217 = iso4217;
+  }
+
   public Integer getID() {
     return ID;
   }
@@ -21,6 +27,10 @@ public class User_InfoModel {
 
   public String getAccount_Number() {
     return Account_Number;
+  }
+
+  public void setAccount_Number(String accountNumber) {
+    Account_Number = accountNumber;
   }
 
   public String getFull_Name() {

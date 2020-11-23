@@ -36,7 +36,7 @@ public class AccountInfoController {
       body.put("message", "Unauthorized");
       return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
     } else {
-      String fullName = userInfoMapper.selectByAccount_Number(accountNumber);
+      String fullName = userInfoMapper.selectFull_Name(accountNumber);
 
       if (fullName == null) {
         body.put("message_code", 404);
