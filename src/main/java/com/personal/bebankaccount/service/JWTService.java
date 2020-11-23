@@ -39,4 +39,9 @@ public class JWTService {
       return false;
     }
   }
+
+  public Object getClaim(String token, String claim) {
+    SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+    return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get(claim);
+  }
 }

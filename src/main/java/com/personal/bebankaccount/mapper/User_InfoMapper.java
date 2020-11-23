@@ -17,4 +17,7 @@ public interface User_InfoMapper {
   @SelectKey(statement = "SELECT UUID_SHORT()", keyProperty = "Account_Number", resultType = String.class, before = true)
   @Insert("INSERT INTO user_info (User_ID, Account_Number, Full_Name, ISO_4217) VALUES (#{User_ID}, #{Account_Number}, #{Full_Name}, #{ISO_4217})")
   int insertSelectKeyAccount_Number(User_InfoModel user_infoModel);
+
+  @Select("SELECT EXISTS(SELECT 1 FROM user_info WHERE Account_Number=#{destination})")
+  boolean exists(String destination);
 }
