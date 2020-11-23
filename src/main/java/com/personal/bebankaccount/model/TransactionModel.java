@@ -1,47 +1,35 @@
 package com.personal.bebankaccount.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ * JsonProperty is used to change the attribute name for ResponseEntity.
+ */
 public class TransactionModel {
-  private final LocalDate Date = LocalDate.now();
-
-  @JsonProperty("Destination")
-  @NotNull(message = "Destination must not be null")
-  @Pattern(regexp = "[0-9]{17}", message = "Destination length must be 17")
-  private final String destination;
-
-  @JsonProperty("Destination_Type")
-  @NotNull(message = "Destination_Type must not be null")
-  private final int destinationType;
-
-  public TransactionModel(String destination, int destinationType, BigDecimal transactionValue) {
-    this.destination = destination;
-    this.destinationType = destinationType;
-    this.transactionValue = transactionValue;
-  }
-
-  @JsonProperty("Transaction_Value")
-  @NotNull(message = "Transaction_Value must not be null")
-  @DecimalMin(value = "0.0", inclusive = false)
-  @Digits(integer = 11, fraction = 0, message = "Transaction_Value maximum digits is 11 and no decimal")
-  private final BigDecimal transactionValue;
+  private LocalDate Date;
+  private String Source;
+  private String Destination;
+  private int Destination_Type;
+  private BigDecimal Transaction_Value;
 
   public LocalDate getDate() {
     return Date;
   }
 
-  public String getDestination() {
-    return destination;
+  public String getSource() {
+    return Source;
   }
 
-  public BigDecimal getTransactionValue() {
-    return transactionValue;
+  public String getDestination() {
+    return Destination;
+  }
+
+  public int getDestination_Type() {
+    return Destination_Type;
+  }
+
+  public BigDecimal getTransaction_Value() {
+    return Transaction_Value;
   }
 }

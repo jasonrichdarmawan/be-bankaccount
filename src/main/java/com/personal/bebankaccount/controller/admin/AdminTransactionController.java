@@ -5,7 +5,7 @@ import com.personal.bebankaccount.mapper.Admin_TransactionsMapper;
 import com.personal.bebankaccount.mapper.TransactionsMapper;
 import com.personal.bebankaccount.mapper.User_InfoMapper;
 import com.personal.bebankaccount.model.AdminTransactionModel;
-import com.personal.bebankaccount.model.TransactionModel;
+import com.personal.bebankaccount.model.TransferModel;
 import com.personal.bebankaccount.service.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -74,7 +74,7 @@ public class AdminTransactionController {
               body.put("message", "Service Unavailable");
               return new ResponseEntity<>(body, HttpStatus.SERVICE_UNAVAILABLE);
             } else {
-              if (transactionsMapper.insert(new TransactionModel(adminTransactionModel.getDestination(), 1, adminTransactionModel.getTransactionValue()), "SETORAN TUNAI") != 1) {
+              if (transactionsMapper.insert(new TransferModel(adminTransactionModel.getDestination(), 1, adminTransactionModel.getTransactionValue()), "SETORAN TUNAI") != 1) {
                 body.put("message_code", 503);
                 body.put("message", "Service Unavailable");
                 return new ResponseEntity<>(body, HttpStatus.SERVICE_UNAVAILABLE);

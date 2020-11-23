@@ -3,7 +3,7 @@ package com.personal.bebankaccount.service;
 import com.personal.bebankaccount.mapper.StatementsMapper;
 import com.personal.bebankaccount.mapper.TransactionsMapper;
 import com.personal.bebankaccount.mapper.User_InfoMapper;
-import com.personal.bebankaccount.model.TransactionModel;
+import com.personal.bebankaccount.model.TransferModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,23 +23,23 @@ public class TransferService {
   @Autowired
   User_InfoMapper userInfoMapper;
 
-  public Map<String, Object> transfer(String source, TransactionModel transactionModel) {
+  public Map<String, Object> transfer(String source, TransferModel transferModel) {
     Map<String, Object> response = new HashMap<>();
 
-    if (source.equals(transactionModel.getDestination()) || !userInfoMapper.exists(transactionModel.getDestination())) {
+    if (source.equals(transferModel.getDestination()) || !userInfoMapper.exists(transferModel.getDestination())) {
       response.put("message_code", 400);
       response.put("message", "Bad Request");
     } else {
-      if (transactionModel.getTransactionValue().compareTo(BigDecimal.ZERO) == 0) {
+      if (transferModel.getTransactionValue().compareTo(BigDecimal.ZERO) == 0) {
         response.put("message_code", 402);
         response.put("message", "Payment Required");
       } else {
         BigDecimal currentBalance = calculateCurrentBalance(source);
-        if (currentBalance.compareTo(transactionModel.getTransactionValue()) < 0) {
+        if (currentBalance.compareTo(transferModel.getTransactionValue()) < 0) {
           response.put("message_code", 402);
           response.put("message", "Insufficient Funds");
         } else {
-          if (transactionsMapper.insert(transactionModel, source) != 1) {
+          if (transactionsMapper.insert(transferModel, source) != 1) {
             response.put("message_code", 500);
             response.put("message", "Internal Server Error");
           } else {
@@ -52,7 +52,7 @@ public class TransferService {
     return response;
   }
 
-  private BigDecimal selectPreviousMonthEndingBalance(String accountNumber) {
+  public BigDecimal selectPreviousMonthEndingBalance(String accountNumber) {
     LocalDate now = LocalDate.now();
     int previousMonth = now.getMonthValue() - 1;
     int year = now.getYear();
