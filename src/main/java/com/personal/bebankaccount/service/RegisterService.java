@@ -51,18 +51,11 @@ public class RegisterService {
           return result;
         } else {
           String token = jwtService.generate(userInfoModel.getAccount_Number(), userID);
-          if (token == null) {
-            result.put("message_code", 201);
-            result.put("message", "CREATED");
-            result.put("User_ID", userID);
-            return result;
-          } else {
-            result.put("message_code", 201);
-            result.put("message", "CREATED");
-            result.put("User_ID", userID);
-            result.put("token", token);
-            return result;
-          }
+          result.put("message_code", 201);
+          result.put("message", "CREATED");
+          result.put("User_ID", userID);
+          result.put("token", token);
+          return result;
         }
       }
     }

@@ -5,10 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-/**
- * JsonProperty is used to change the attribute name for ResponseEntity.
- */
-public class TransactionModel {
+@SuppressWarnings("unused") // managed by MyBatis
+public class TransactionsModel {
   private LocalDate Date;
   private String Source;
   private String Destination;

@@ -2,7 +2,7 @@ package com.personal.bebankaccount.controller;
 
 import com.personal.bebankaccount.mapper.TransactionsMapper;
 import com.personal.bebankaccount.mapper.Transactions_ProgressMapper;
-import com.personal.bebankaccount.model.TransactionModel;
+import com.personal.bebankaccount.model.TransactionsModel;
 import com.personal.bebankaccount.model.TransactionRabbitMQModel;
 import com.personal.bebankaccount.model.Transactions_ProgressModel;
 import com.personal.bebankaccount.model.TransferModel;
@@ -177,13 +177,13 @@ public class TransactionController {
         return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
       } else {
         String accountNumber = (String) jwtService.getClaim(token, "Account_Number");
-        List<TransactionModel> transactionModels = transactionsMapper.select(accountNumber, start, end);
+        List<TransactionsModel> transactionsModels = transactionsMapper.select(accountNumber, start, end);
         BigDecimal openingBalance = transferService.selectPreviousMonthEndingBalance(accountNumber);
 
         body.put("message_code", 200);
         body.put("message", "OK");
         body.put("Opening_Balance", openingBalance);
-        body.put("transactions", transactionModels);
+        body.put("transactions", transactionsModels);
         return new ResponseEntity<>(body, HttpStatus.OK);
       }
     }

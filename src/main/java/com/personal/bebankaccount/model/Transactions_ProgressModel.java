@@ -1,9 +1,10 @@
 package com.personal.bebankaccount.model;
 
+@SuppressWarnings("unused") // managed by MyBatis
 public class Transactions_ProgressModel {
-  private String Progress_ID;
-  private String Account_Number;
-  private String Message_Code;
+  private String Progress_ID; // managed by Transactions_ProgressMapper.insertSelectKeyProgress_ID method
+  private final String Account_Number;
+  private final String Message_Code;
 
   public Transactions_ProgressModel(String account_number, String message_code) {
     Account_Number = account_number;

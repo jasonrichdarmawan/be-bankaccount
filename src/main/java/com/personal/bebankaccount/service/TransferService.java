@@ -29,27 +29,31 @@ public class TransferService {
     if (source.equals(transferModel.getDestination()) || !userInfoMapper.exists(transferModel.getDestination())) {
       response.put("message_code", 400);
       response.put("message", "Bad Request");
+      return response;
     } else {
       if (transferModel.getTransactionValue().compareTo(BigDecimal.ZERO) == 0) {
         response.put("message_code", 402);
         response.put("message", "Payment Required");
+        return response;
       } else {
         BigDecimal currentBalance = calculateCurrentBalance(source);
         if (currentBalance.compareTo(transferModel.getTransactionValue()) < 0) {
           response.put("message_code", 402);
           response.put("message", "Insufficient Funds");
+          return response;
         } else {
           if (transactionsMapper.insert(transferModel, source) != 1) {
             response.put("message_code", 500);
             response.put("message", "Internal Server Error");
+            return response;
           } else {
             response.put("message_code", 201);
             response.put("message", "CREATED");
+            return response;
           }
         }
       }
     }
-    return response;
   }
 
   public BigDecimal selectPreviousMonthEndingBalance(String accountNumber) {
@@ -75,6 +79,10 @@ public class TransferService {
 
     BigDecimal mutation = transactionsMapper.mutation(accountNumber, start, end);
 
-    return previousMonthEndingBalance.add(mutation);
+    if (mutation == null) {
+      return previousMonthEndingBalance;
+    } else {
+      return previousMonthEndingBalance.add(mutation);
+    }
   }
 }

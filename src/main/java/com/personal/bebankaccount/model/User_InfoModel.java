@@ -2,23 +2,18 @@ package com.personal.bebankaccount.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-@SuppressWarnings("unused")
+@SuppressWarnings("unused") // managed by MyBatis
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class User_InfoModel {
-  private Integer ID;
-  private String User_ID;
-  private String Account_Number;
-  private String Full_Name;
-  private Integer ISO_4217;
+  private final String User_ID;
+  private String Account_Number; // managed by User_InfoMapper.insertSelectKeyAccount_Number method
+  private final String Full_Name;
+  private final Integer ISO_4217;
 
   public User_InfoModel(String userID, String fullName, int iso4217) {
     User_ID = userID;
     Full_Name = fullName;
     ISO_4217 = iso4217;
-  }
-
-  public Integer getID() {
-    return ID;
   }
 
   public String getUser_ID() {

@@ -20,6 +20,21 @@ public class HashedPINService {
 
     return iterations + ":" + toHex(salt) + ":" + toHex(generatedHashedPIN);
   }
+  
+  /**
+   * Comparing the hashedPIN with the generatedHashedPIN.
+   *
+   * 1. a. 1 | 1 = 1, bitwise OR, return 1 if one of the variable is 1.
+   *    b. 1 | 0 = 1
+   * 2. a. 1 ^ 1 = 0, bitwise XOR, return 1 if not same.
+   *    b. 1 ^ 0 = 1, return 0 if different.
+   * 3. difference |= hash[i] ^ generatedHashedPIN[i]
+   *    => `a += b + c` is equal to `a = a + b + c`
+   *    => difference = difference | hash[i] ^ generatedHashedPIN[i]
+   *    => difference = ( difference | hash[i] ) ^ generatedHashedPIN[i]
+   *
+   * Confused? use Arrays.equals(hashedPIN, generatedHashedPIN);
+   */
   public boolean validate(String pin, String hashedPIN) {
     String[] parts = hashedPIN.split(":");
     int iterations = Integer.parseInt(parts[0]);
@@ -27,20 +42,7 @@ public class HashedPINService {
     byte[] hash = fromHex(parts[2]);
 
     byte[] generatedHashedPIN = generateSecretPBKDF2WithHmacSHA512(pin.toCharArray(), salt, iterations, hash.length * 8);
-    /**
-     * Comparing the hashedPIN with the generatedHashedPIN.
-     *
-     * 1. a. 1 | 1 = 1, bitwise OR, return 1 if one of the variable is 1.
-     *    b. 1 | 0 = 1
-     * 2. a. 1 ^ 1 = 0, bitwise XOR, return 1 if not same.
-     *    b. 1 ^ 0 = 1, return 0 if different.
-     * 3. difference |= hash[i] ^ generatedHashedPIN[i]
-     *    => `a += b + c` is equal to `a = a + b + c`
-     *    => difference = difference | hash[i] ^ generatedHashedPIN[i]
-     *    => difference = ( difference | hash[i] ) ^ generatedHashedPIN[i]
-     *
-     * Confused? use Arrays.equals(hashedPIN, generatedHashedPIN);
-     */
+
     int difference = hash.length ^ generatedHashedPIN.length; // 16 ^ 16 == 0;
     for (
             int i = 0;
