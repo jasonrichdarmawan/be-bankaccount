@@ -10,9 +10,18 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
 
+  mq-rabbitmq:
+    image: rabbitmq:3.8-alpine
+    restart: always
+    hostname: mq-rabbitmq
+    # todo: do not expose port 5672 to host.
+    ports:
+    - 5672:5672
+
   be-bankaccount:
     depends_on:
       - db-mysql
+      - mq-rabbitmq
     image: be-bankaccount
     ports:
     - 8443:8443
@@ -21,3 +30,4 @@ services:
       - be-bankaccount.env
     environment:
       spring.datasource.url: jdbc:mysql://db-mysql:3306/bankaccount
+      spring.rabbitmq.host: mq-rabbitmq
