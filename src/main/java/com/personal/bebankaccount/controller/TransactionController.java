@@ -178,7 +178,7 @@ public class TransactionController {
       } else {
         String accountNumber = (String) jwtService.getClaim(token, "Account_Number");
         List<TransactionsModel> transactionsModels = transactionsMapper.select(accountNumber, start, end);
-        BigDecimal openingBalance = transferService.selectPreviousMonthEndingBalance(accountNumber);
+        BigDecimal openingBalance = transferService.calculateBalanceAtPeriod(accountNumber, start);
 
         body.put("message_code", 200);
         body.put("message", "OK");

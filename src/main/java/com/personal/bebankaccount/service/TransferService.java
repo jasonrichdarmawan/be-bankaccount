@@ -56,7 +56,7 @@ public class TransferService {
     }
   }
 
-  public BigDecimal selectPreviousMonthEndingBalance(String accountNumber) {
+  private BigDecimal selectPreviousMonthEndingBalance(String accountNumber) {
     LocalDate now = LocalDate.now();
     int previousMonth = now.getMonthValue() - 1;
     int year = now.getYear();
@@ -68,6 +68,24 @@ public class TransferService {
     BigDecimal previousMonthEndingBalance = statementsMapper.select(accountNumber, previousMonth, year);
 
     return previousMonthEndingBalance == null ? new BigDecimal(0) : previousMonthEndingBalance;
+  }
+
+  public BigDecimal calculateBalanceAtPeriod(String accountNumber, LocalDate end) {
+    BigDecimal previousMonthEndingBalance = selectPreviousMonthEndingBalance(accountNumber);
+
+    LocalDate now = LocalDate.now();
+    LocalDate start = now.withDayOfMonth(1);
+    if (end.getDayOfMonth() != 1) {
+      end = end.minusDays(1);
+    }
+
+    BigDecimal mutation = transactionsMapper.mutation(accountNumber, start, end);
+
+    if (mutation == null) {
+      return previousMonthEndingBalance;
+    } else {
+      return previousMonthEndingBalance.add(mutation);
+    }
   }
 
   public BigDecimal calculateCurrentBalance(String accountNumber) {
