@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class AdminTransactionController {
   TransactionsMapper transactionsMapper;
 
   @PostMapping("api/v1/admin/transaction")
-  public ResponseEntity<?> transfer(@RequestHeader(value = "Authorization") String authorization, @Valid @RequestBody AdminTransactionModel adminTransactionModel) {
+  public ResponseEntity<?> transfer(@RequestHeader(value = "Authorization") @Pattern(regexp = "^Bearer .*$", message = "Authorization must contains Bearer token") String authorization, @Valid @RequestBody AdminTransactionModel adminTransactionModel) {
     String token = authorization.split(" ")[1];
     boolean isValid = jwtService.isValid(token);
 

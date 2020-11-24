@@ -46,7 +46,7 @@ public class TransactionController {
   RabbitTemplate rabbitTemplate;
 
   @GetMapping("api/v1/balance")
-  public ResponseEntity<?> calculateCurrentBalance(@RequestHeader(value = "Authorization") String authorization) {
+  public ResponseEntity<?> calculateCurrentBalance(@RequestHeader(value = "Authorization") @Pattern(regexp = "^Bearer .*$", message = "Authorization must contains Bearer token") String authorization) {
     String token = authorization.split(" ")[1];
     boolean isValid = jwtService.isValid(authorization.split(" ")[1]);
 
@@ -67,7 +67,7 @@ public class TransactionController {
   }
 
   @PostMapping("api/v1/transaction")
-  public ResponseEntity<?> transfer(@RequestHeader(value = "Authorization") String authorization, @Valid @RequestBody TransferModel transferModel) {
+  public ResponseEntity<?> transfer(@RequestHeader(value = "Authorization") @Pattern(regexp = "^Bearer .*$", message = "Authorization must contains Bearer token") String authorization, @Valid @RequestBody TransferModel transferModel) {
     String token = authorization.split(" ")[1];
     boolean isValid = jwtService.isValid(token);
 
@@ -118,7 +118,7 @@ public class TransactionController {
   }
 
   @PostMapping("api/v2/transaction")
-  public ResponseEntity<?> transferv2(@RequestHeader(value = "Authorization") String authorization, @Valid @RequestBody TransferModel transferModel, UriComponentsBuilder uriComponentsBuilder) {
+  public ResponseEntity<?> transferv2(@RequestHeader(value = "Authorization") @Pattern(regexp = "^Bearer .*$", message = "Authorization must contains Bearer token") String authorization, @Valid @RequestBody TransferModel transferModel, UriComponentsBuilder uriComponentsBuilder) {
     String token = authorization.split(" ")[1];
     boolean isValid = jwtService.isValid(token);
 
@@ -153,7 +153,7 @@ public class TransactionController {
   }
 
   @GetMapping("api/v1/history/{start}/{end}")
-  public ResponseEntity<?> selectTransactionBetweenStartAndDate(@RequestHeader(value = "Authorization") String authorization, @PathVariable("start") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate start, @PathVariable("end") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
+  public ResponseEntity<?> selectTransactionBetweenStartAndDate(@RequestHeader(value = "Authorization") @Pattern(regexp = "^Bearer .*$", message = "Authorization must contains Bearer token") String authorization, @PathVariable("start") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate start, @PathVariable("end") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
     Map<String, Object> body = new HashMap<>();
 
     LocalDate today = LocalDate.now();
