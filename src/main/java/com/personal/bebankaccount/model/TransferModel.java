@@ -41,6 +41,10 @@ public class TransferModel {
     return destination;
   }
 
+  public int getDestinationType() {
+    return destinationType;
+  }
+
   public BigDecimal getTransactionValue() {
     return transactionValue;
   }

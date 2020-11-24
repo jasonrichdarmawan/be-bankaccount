@@ -19,7 +19,7 @@ public interface TransactionsMapper {
           "(SELECT sum(Transaction_Value) FROM transactions WHERE DATE BETWEEN #{start} AND #{end} AND Source=#{accountNumber});")
   BigDecimal mutation(String accountNumber, LocalDate start, LocalDate end);
 
-  @Insert("INSERT INTO transactions (Date, Source, Destination, Destination_Type, Transaction_Value) VALUES (#{transactionModel.Date}, #{source}, #{transactionModel.destination}, #{transactionModel.destinationType}, #{transactionModel.transactionValue})")
+  @Insert("INSERT INTO transactions (Date, Source, Destination, Destination_Type, Transaction_Value) VALUES (#{transferModel.Date}, #{source}, #{transferModel.destination}, #{transferModel.destinationType}, #{transferModel.transactionValue})")
   int insert(TransferModel transferModel, String source);
 
   @Select("SELECT Date, Source, Destination, Destination_Type, Transaction_Value FROM transactions" +
