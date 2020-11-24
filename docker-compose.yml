@@ -14,9 +14,6 @@ services:
     image: rabbitmq:3.8-alpine
     restart: always
     hostname: mq-rabbitmq
-    # todo: do not expose port 5672 to host.
-    ports:
-    - 5672:5672
 
   be-bankaccount:
     depends_on:
