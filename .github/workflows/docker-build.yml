@@ -28,4 +28,4 @@ jobs:
         run: |
           eval $(ssh-agent -s)
           echo "${{ secrets.SSH_PRIVATE_KEY }}" |  ssh-add -
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.HOSTNAME }} "rm -rf be-bankaccount; git clone https://github.com/kidfrom/be-bankaccount.git; cd be-bankaccount; echo ${{ secrets.be_bankaccount }} > be-bankaccount.env; yes | cp ${{ secrets.KEYSTOREPATH }}/keystore.p12 src/main/resources/keystore.p12; docker build -t be-bankaccount .; docker-compose up -d;"
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.HOSTNAME }} "rm -rf be-bankaccount; git clone https://github.com/kidfrom/be-bankaccount.git; cd be-bankaccount; echo $'\n'spring.profiles.active=development >> src/main/resources/application.properties; echo ${{ secrets.be_bankaccount }} > be-bankaccount.env; yes | cp ${{ secrets.KEYSTOREPATH }}/keystore.p12 src/main/resources/keystore.p12; docker build -t be-bankaccount .; docker-compose up -d;"
