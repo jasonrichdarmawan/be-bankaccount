@@ -43,12 +43,11 @@ public class AccountInfoController {
         body.put("message", "NOT FOUND");
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
       } else {
-        body.put("message_code", 200);
-        body.put("message", "OK");
-
         Map<String, String> account_info = new HashMap<>();
         account_info.put("Full_Name", fullName);
 
+        body.put("message_code", 200);
+        body.put("message", "OK");
         body.put("account_info", account_info);
 
         return new ResponseEntity<>(body, HttpStatus.OK);
