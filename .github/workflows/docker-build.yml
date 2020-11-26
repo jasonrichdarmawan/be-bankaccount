@@ -34,4 +34,5 @@ jobs:
             echo ${{ secrets.be_bankaccount }} > be-bankaccount.env; \
             yes | cp ${{ secrets.KEYSTOREPATH }}/keystore.p12 src/main/resources/keystore.p12; \
             docker build -t be-bankaccount .; \
+            docker rmi $(docker images -f "dangling=true" -q) \
             docker-compose up -d;"
