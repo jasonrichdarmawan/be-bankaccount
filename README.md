@@ -1,14 +1,19 @@
-## CI/CD environment
+### Documentation
+
+- [ ] [Presentation](https://lnkd.in/gGJ36Pz)
+- [x] [API Documentation](https://lnkd.in/gFYxHAs)
+
+### CI/CD environment
 
 - Git
 - Docker Engine
 - Docker Compose
 
-## Coding Styles
+### Coding Styles
 
 To reduce boilerplate, follow this coding styles.
 
-### Model used by @ResponseBody
+#### Model used by @ResponseBody
 @ResponseBody can convert JSON to Object without setters or constructor:
 
 - No attribute with `_`.
@@ -27,7 +32,7 @@ To reduce boilerplate, follow this coding styles.
   String fullName;
   ```
 
-### Model used by @Mapper
+#### Model used by @Mapper
 @Mapper can convert `ResultSet` to Object without setters and constructor:
 
 - Attribute should be identical to the column.
@@ -41,7 +46,7 @@ To reduce boilerplate, follow this coding styles.
   }
   ```
   
-### Validation
+#### Validation
 
 Maintainability in this case: You don't have to read the entire method if you wish to modify a validation logic. You only need to write the new check on top of the existing logic.
 
@@ -59,7 +64,7 @@ if (false) {
 return isValid;
 ```
 
-## To Do
+### To Do
 - [ ] GitHub self-hosted runners, to prevent unauthorized access to ssh port 22
 
 - [x] BE: Endpoint
