@@ -166,7 +166,7 @@ public class TransactionController {
     ) {
       body.put("message_code", 400);
       body.put("message", "Bad Request");
-      return new ResponseEntity<>(body, HttpStatus.OK);
+      return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     } else {
       String token = authorization.split(" ")[1];
       boolean isValid = jwtService.isValid(token);
